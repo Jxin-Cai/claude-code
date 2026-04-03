@@ -69,12 +69,24 @@ bun run build.ts
 
 ### 6. 全局安装
 
+#### 方式一：npm 全局安装（推荐）
+
 ```bash
-# 添加可执行权限并软链接到 PATH
+npm install -g .
+```
+
+npm 会自动将 `package.json` 中 `bin.claude` 指向的 `cli.js` 链接到全局 PATH，一步到位。
+
+#### 方式二：手动软链接
+
+```bash
 chmod +x cli.js
 sudo ln -sf "$(pwd)/cli.js" /usr/local/bin/claude
+```
 
-# 验证
+#### 验证
+
+```bash
 claude --version
 ```
 
