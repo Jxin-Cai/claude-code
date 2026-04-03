@@ -183,6 +183,22 @@ export function updateActiveCompanion(
   return updateCompanion(active.id, updater)
 }
 
+export function removeCompanion(companionId: string): boolean {
+  const settings = getBuddySettings()
+  const remaining = settings.companions.filter(c => c.id !== companionId)
+  if (remaining.length === settings.companions.length) return false
+
+  const needNewActive = settings.activeCompanionId === companionId
+  saveBuddySettings({
+    version: 2,
+    companions: remaining,
+    activeCompanionId: needNewActive
+      ? remaining[0]?.id
+      : settings.activeCompanionId,
+  })
+  return true
+}
+
 /**
  * Save a companion as the active companion.
  * Existing callers can keep using this and it will update by id when present.
